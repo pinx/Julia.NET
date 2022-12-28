@@ -1,15 +1,15 @@
 ﻿using System;
-using Julia.NET.Core;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
 try
 {
-    var jo = new JuliaOptions();
+    var jo = new Options();
     // jo.LoadSystemImage = "my_sys_image_path";
-    Julia.NET.Core.Julia.Init(jo);
+    Julia.Init(jo);
 
-    JModule myModule = Julia.NET.Core.Julia.Eval(@"
+    JModule myModule = Julia.Eval(@"
                     module T
                         add!(m1, m2) = m1 .+= m2
                     end
@@ -22,7 +22,7 @@ try
     myModule.GetFunction("add!").Invoke(new Any(m1), new Any(m2));
     string.Join(",", m1).Println();
 
-    Julia.NET.Core.Julia.Exit();
+    Julia.Exit();
 }
 catch (Exception e)
 {

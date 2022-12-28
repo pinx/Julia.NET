@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public static partial class JPrimitive
     {
@@ -15,7 +15,7 @@ namespace Julia.NET.Core
             Julia2Sharp.Add(type, t);
         }
 
-        public static JType FindJuliaPrimitiveEquivilent(Type t)
+        public static JType FindJuliaPrimitiveEquivalent(Type t)
         {
             if (Sharp2Julia.TryGetValue(t, out var v))
                 return v;

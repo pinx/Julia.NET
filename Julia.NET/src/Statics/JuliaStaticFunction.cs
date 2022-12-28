@@ -1,6 +1,6 @@
-﻿using Julia.NET.Stdlib;
+﻿using JuliaNET.Stdlib;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     public partial class JuliaStaticLibrary
     {

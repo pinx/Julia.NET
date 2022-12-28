@@ -1,15 +1,17 @@
 ﻿using System.Dynamic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Julia.NET.Core;
-using Julia.NET.Stdlib;
+using JuliaNET.Core;
+using JuliaNET.Stdlib;
 
-namespace Julia.NET.Dynamics
+namespace JuliaNET.Dynamics
 {
     public class DyAny : IDynamicMetaObjectProvider
     {
         internal readonly Any Ptr;
+
         public DyAny(Any ptr) => Ptr = ptr;
+
         public DynamicMetaObject GetMetaObject(Expression parameter) => new JuliaDynamic(parameter, this);
 
         #region Conversions
@@ -32,12 +34,14 @@ namespace Julia.NET.Dynamics
         #endregion
 
         public override string ToString() => Ptr.ToString();
+
         public override int GetHashCode() => Ptr.GetHashCode();
     }
 
     internal class JuliaDynamic : DynamicMetaObject
     {
         private static readonly MethodInfo FuncInvokeMi = typeof(Any).GetMethod("Invoke", new[] { typeof(DyAny), typeof(Any) });
+
         private static readonly ConstructorInfo JuliaDyVci = typeof(DyAny).GetConstructor(new[] { typeof(Any) });
 
         public JuliaDynamic(Expression expression,

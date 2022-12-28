@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
-using Julia.NET.Core;
-using Julia.NET.Statics.ILCompiler;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Statics.ILCompiler;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 using Lokad.ILPack;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     public partial class JuliaStaticLibrary
     {
         private readonly Any _baseModule;
+
         private ModuleBuilder _baseModuleBuilder;
+
         private ILTypeBuilder _baseModuleTypeBuilder;
 
         private FieldInfo UniversalConstantsFI;
+
         private readonly Dictionary<string, int> _universalConstants = new();
 
         private static readonly MethodInfo JuliaEvalMI =

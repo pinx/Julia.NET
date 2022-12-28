@@ -1,8 +1,8 @@
 ﻿using System;
-using Julia.NET.Stdlib;
+using JuliaNET.Stdlib;
 
 //Written by Johnathan Bizzano
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class JuliaException : Exception
     {

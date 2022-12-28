@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class JModuleAttribute : Attribute

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     public partial class JuliaStaticLibrary
     {

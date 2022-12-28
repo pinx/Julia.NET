@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class JuliaGC
     {
         private static UnsafeStream jl_gc_frames = new();
+
         public static unsafe _jl_gcframe_t** CurrentFrame = (_jl_gcframe_t**)JuliaCalls.jl_get_pgcstack();
 
         [StructLayout(LayoutKind.Sequential)]

@@ -4,9 +4,9 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace Julia.NET.Utils
+namespace JuliaNET.Utils
 {
-    public static class JLUtils
+    public static class JuliaUtils
     {
         internal static string GetJuliaDir()
         {

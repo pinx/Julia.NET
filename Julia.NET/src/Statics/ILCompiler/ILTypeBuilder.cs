@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace Julia.NET.Statics.ILCompiler
+namespace JuliaNET.Statics.ILCompiler
 {
     public struct ILTypeBuilder
     {

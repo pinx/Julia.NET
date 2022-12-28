@@ -2,10 +2,10 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using Julia.NET.Core;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Statics.ILCompiler
+namespace JuliaNET.Statics.ILCompiler
 {
     public struct IlExprBuilder
     {

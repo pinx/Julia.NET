@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Reflection;
 using System.Reflection.Emit;
-using Julia.NET.Core;
-using Julia.NET.Statics.ILCompiler;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Statics.ILCompiler;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     internal class JuliaStaticModule
     {

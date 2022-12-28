@@ -7,6 +7,7 @@
     <PackageProjectUrl>https://github.com/HyperSphereStudio/JULIAdotNET</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/HyperSphereStudio/JULIAdotNET/blob/main/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/HyperSphereStudio/JULIAdotNET</RepositoryUrl>
+    <RootNamespace>JuliaNET</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -18,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lokad.ILPack" Version="0.1.7"/>
+    <PackageReference Include="Lokad.ILPack" Version="0.1.7" />
   </ItemGroup>
 
 </Project>

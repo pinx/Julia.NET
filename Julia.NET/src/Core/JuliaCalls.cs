@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Julia.NET.Stdlib;
+using JuliaNET.Stdlib;
 
 //Written By Johnathan Bizzano
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class JuliaCalls
     {
-        public enum JLIMAGESEARCH
-        {
-            JL_IMAGE_CWD = 0,
-            JL_IMAGE_JULIA_HOME = 1,
-            //JL_IMAGE_LIBJULIA = 2,
-        }
-
-        [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void julia_init(JLIMAGESEARCH rel);
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void jl_init();
 
@@ -303,7 +293,6 @@ namespace Julia.NET.Core
                                                    IntPtr key,
                                                    IntPtr deflt);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int jl_errno();
 
@@ -399,10 +388,8 @@ namespace Julia.NET.Core
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void jl_eof_error();
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_get_libdir();
-
 
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void jl_init_with_image(string julia_bindir,
@@ -414,10 +401,8 @@ namespace Julia.NET.Core
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int jl_is_initialized();
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void jl_exit(int status);
-
 
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_pathname_for_handle(IntPtr handle);
@@ -490,7 +475,6 @@ namespace Julia.NET.Core
                                                             string file,
                                                             int line);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_load_dynamic_library(string fname,
                                                             nint flags,
@@ -524,10 +508,8 @@ namespace Julia.NET.Core
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int jl_operator_precedence(string sym);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void jl_yield();
-
 
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_new_task(IntPtr f,
@@ -655,7 +637,6 @@ namespace Julia.NET.Core
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_array_ptr(JArray a);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern JType jl_array_eltype(IntPtr a);
 
@@ -681,7 +662,6 @@ namespace Julia.NET.Core
                                                       nint nc,
                                                       nint z);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe IntPtr jl_new_structv(IntPtr type,
                                                           Any* args,
@@ -691,10 +671,8 @@ namespace Julia.NET.Core
         public static extern unsafe IntPtr jl_apply_tuple_type_v(IntPtr* types,
                                                                  nint nc);
 
-
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr jl_new_struct_uninit(IntPtr t);
-
 
         [DllImport("libjulia.dll", CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern IntPtr* jl_get_pgcstack();

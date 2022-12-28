@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public interface JVal<T>
     {
@@ -16,6 +16,7 @@ namespace Julia.NET.Core
                                                  out StateT ns);
 
         protected internal EnumerableT EnumerationCurrent(StateT s);
+
         protected internal void EnumerationDispose();
 
         protected internal bool EnumerationMoveNext(StateT s,
@@ -24,6 +25,7 @@ namespace Julia.NET.Core
         protected internal IndexT EnumerationIndex(StateT s);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         IEnumerator<EnumerableT> IEnumerable<EnumerableT>.GetEnumerator() => new JEnumerator<ObjectT, EnumerableT, StateT, IndexT>(This);
     }
 
@@ -41,9 +43,13 @@ namespace Julia.NET.Core
         }
 
         public bool MoveNext() => _ptr.EnumerationMoveNext(_state, out _state);
+
         public void Reset() => _ptr.EnumerationReset(_state, out _state);
+
         public EnumerableT Current => _ptr.EnumerationCurrent(_state);
+
         object IEnumerator.Current => Current;
+
         public void Dispose() => _ptr.EnumerationDispose();
     }
 }

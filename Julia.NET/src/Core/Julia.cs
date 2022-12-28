@@ -1,37 +1,41 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
-//Written by Johnathan Bizzano
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class Julia
     {
         public static bool IsInitialized { get; private set; }
+
         private static string _juliaDir;
+
         public static bool PreviouslyLoaded { get; private set; }
+
         private static object _gclock = new();
+
         public static string LibDirectory => MString(JuliaCalls.jl_get_libdir());
+
         public static bool IsInstalled => JuliaDir != null;
 
         public static string JuliaDir
         {
             get
             {
-                if (_juliaDir != null)
-                    return _juliaDir;
-                _juliaDir = JLUtils.GetJuliaDir();
+                if (_juliaDir == null)
+                    _juliaDir = JuliaUtils.GetJuliaDir();
                 return _juliaDir;
             }
             set => _juliaDir = value;
         }
 
-        public static void Init() => Init(new JuliaOptions());
-        public static void Init(JuliaOptions options) => Init(options, true);
+        public static void Init() => Init(new Options());
 
-        internal static void Init(JuliaOptions options,
+        public static void Init(Options options) => Init(options, true);
+
+        internal static void Init(Options options,
                                   bool sharpInit)
         {
             if (IsInitialized) return;
@@ -49,7 +53,7 @@ namespace Julia.NET.Core
                 var env = Environment.CurrentDirectory;
                 Environment.CurrentDirectory = options.JuliaDirectory;
                 JuliaDll.Open();
-                JuliaBoot.jl_init_code(options, sharpInit);
+                Boot.jl_init_code(options, sharpInit);
                 Environment.CurrentDirectory = env;
                 PreviouslyLoaded = true;
 
@@ -150,7 +154,7 @@ namespace Julia.NET.Core
 #endif
         public static int Init(IntPtr julia_bindir)
         {
-            var jo = new JuliaOptions();
+            var jo = new Options();
             jo.JuliaDirectory = Marshal.PtrToStringUni(julia_bindir);
             Julia.Init(jo, false);
             return 0;

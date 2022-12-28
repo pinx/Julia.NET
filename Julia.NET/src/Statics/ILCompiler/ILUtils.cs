@@ -1,4 +1,4 @@
-﻿namespace Julia.NET.Statics.ILCompiler
+﻿namespace JuliaNET.Statics.ILCompiler
 {
     public class ILUtils
     {

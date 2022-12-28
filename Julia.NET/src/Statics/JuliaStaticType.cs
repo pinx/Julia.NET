@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
-using Julia.NET.Core;
-using Julia.NET.Stdlib;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Statics
+namespace JuliaNET.Statics
 {
     public partial class JuliaStaticLibrary
     {

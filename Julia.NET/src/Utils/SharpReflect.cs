@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Julia.NET.Utils
+namespace JuliaNET.Utils
 {
     public class EmptyClass
     {

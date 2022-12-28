@@ -1,7 +1,7 @@
 using System;
-using Julia.NET.Stdlib;
+using JuliaNET.Stdlib;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public static partial class JPrimitive
     {

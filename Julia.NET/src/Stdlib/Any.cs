@@ -3,11 +3,11 @@ using System.Dynamic;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Julia.NET.Core;
-using Julia.NET.Dynamics;
-using Julia.NET.Utils;
+using JuliaNET.Core;
+using JuliaNET.Dynamics;
+using JuliaNET.Utils;
 
-namespace Julia.NET.Stdlib
+namespace JuliaNET.Stdlib
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Any : IDynamicMetaObjectProvider, JEnumerable<Any, Any, Any, Any>, JVal<Any>

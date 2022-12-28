@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class JuliaDll
     {
@@ -16,7 +16,6 @@ namespace Julia.NET.Core
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern IntPtr GetProcAddress(IntPtr module,
                                                      string proc);
-
 
         internal static void Open() => LoadLibrary("libjulia.dll");
 

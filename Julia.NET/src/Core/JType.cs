@@ -1,7 +1,7 @@
 ﻿using System;
-using Julia.NET.Stdlib;
+using JuliaNET.Stdlib;
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public enum JTypeType : byte
     {
@@ -37,17 +37,20 @@ namespace Julia.NET.Core
                     return JTypeType.MutableStruct;
                 if (IsImmutable)
                     return JTypeType.Struct;
-                throw new Exception("Unable to determine typetype of " + this);
+                throw new Exception("Unable to determine type of " + this);
             }
         }
 
         public JType(Any ptr) => _ptr = ptr;
 
         public static implicit operator JType(Any ptr) => new(ptr);
+
         public static implicit operator Any(JType ptr) => new(ptr._ptr);
 
         public Any Create(params Any[] values) => _ptr.Invoke(values);
+
         public Any Create() => _ptr.Invoke();
+
         public Any Create(Any val) => _ptr.Invoke(val);
 
         public Any Create(Any val1,
@@ -65,19 +68,22 @@ namespace Julia.NET.Core
         public static bool operator !=(JType v,
                                        JType p) => !(v == p);
 
-        #region NeededOverloadedOperators
+        #region Needed Overloaded Operators
 
         public override string ToString() => _ptr.ToString();
+
         public override int GetHashCode() => _ptr.GetHashCode();
+
         public override bool Equals(object o) => _ptr.Equals(o);
 
         #endregion
 
         public string FieldName(int i) => (string)JPrimitive.fieldnameF.Invoke(this, i);
+
         public int FieldOffset(int i) => (int)JPrimitive.fieldoffsetF.Invoke(this, i);
+
         public JType FieldType(int i) => JPrimitive.fieldtypeF.Invoke(this, i);
 
-
-        public static JType GetJuliaTypeFromNetType(Type t) => JPrimitive.FindJuliaPrimitiveEquivilent(t);
+        public static JType GetJuliaTypeFromNetType(Type t) => JPrimitive.FindJuliaPrimitiveEquivalent(t);
     }
 }

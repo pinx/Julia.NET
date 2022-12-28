@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using Julia.NET.Stdlib;
+using JuliaNET.Stdlib;
 
 //Written by Johnathan Bizzano
 
-namespace Julia.NET.Core
+namespace JuliaNET.Core
 {
     public class ArrayEnumerator : IEnumerator
     {
