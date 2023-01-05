@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{9B099638-725B-441B-91EC-85BFE93A2ECD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox48", "Sandbox48\Sandbox48.csproj", "{DF199950-742F-4DA3-9170-AF5B097CDE70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Julia.NETstandard", "Julia.NETstandard\Julia.NETstandard.csproj", "{614FED42-E1B9-4006-8D15-E96A974620FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{9B099638-725B-441B-91EC-85BFE93A2ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B099638-725B-441B-91EC-85BFE93A2ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B099638-725B-441B-91EC-85BFE93A2ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF199950-742F-4DA3-9170-AF5B097CDE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF199950-742F-4DA3-9170-AF5B097CDE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF199950-742F-4DA3-9170-AF5B097CDE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF199950-742F-4DA3-9170-AF5B097CDE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{614FED42-E1B9-4006-8D15-E96A974620FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614FED42-E1B9-4006-8D15-E96A974620FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614FED42-E1B9-4006-8D15-E96A974620FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614FED42-E1B9-4006-8D15-E96A974620FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
