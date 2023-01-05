@@ -85,12 +85,6 @@ namespace JuliaNET.Stdlib
         {
         }
 
-        public Any(Array a,
-                   bool own,
-                   bool isFixed) : this(new JArray(a, own, isFixed))
-        {
-        }
-
         public Any(object o) : this(CreateFromObject(o)) { }
 
         private static Any CreateFromObject(object o)

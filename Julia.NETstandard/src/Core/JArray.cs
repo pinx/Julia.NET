@@ -119,16 +119,11 @@ namespace JuliaNET.Core
         }
 
         public unsafe JArray(Array a,
-                             bool own = false,
-                             bool arrayIsFixed = false)
+                             bool own = false)
         {
-            if (!arrayIsFixed)
-                GCHandle.Alloc(a, GCHandleType.Pinned);
-
             var elType = JType.GetJuliaTypeFromNetType(a.GetType().GetElementType());
             var aType = JuliaCalls.jl_apply_array_type(elType, a.Rank);
-            // TODO: convert to Standard
-            IntPtr ptr = default; // = (IntPtr)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(a));
+            IntPtr ptr = GCHandle.Alloc(a, GCHandleType.Pinned).AddrOfPinnedObject();
 
             if (a.Rank == 1)
                 _ptr = JuliaCalls.jl_ptr_to_array_1d(aType, ptr, a.Length, own ? 1 : 0);
