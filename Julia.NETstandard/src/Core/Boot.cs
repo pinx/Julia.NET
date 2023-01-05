@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -11,14 +12,14 @@ namespace JuliaNET.Core
         {
             if (sharpInit)
             {
-                var arguments = options.Arguments.ToArray();
+                var arguments = options.Arguments.Where(arg => !string.IsNullOrWhiteSpace(arg)).ToArray();
                 if (arguments.Length != 0)
                 {
                     int len = arguments.Length;
                     unsafe
                     {
                         var stringBytes = stackalloc byte*[arguments.Length];
-                        var handles = stackalloc GCHandle[arguments.Length];
+                        GCHandle[] handles = new GCHandle[arguments.Length];
 
                         for (int i = 0; i < arguments.Length; ++i)
                         {
