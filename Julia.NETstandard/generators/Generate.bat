@@ -1,2 +1,2 @@
 ﻿
-julia generators/Generator.jl
+julia Generator.jl

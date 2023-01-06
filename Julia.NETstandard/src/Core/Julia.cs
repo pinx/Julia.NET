@@ -124,20 +124,32 @@ namespace JuliaNET.Core
         public static Any Eval(string str,
                                Any module) => JPrimitive.ievalF.Invoke(str, module);
 
-        // public static void PUSH_GC(Span<Any> values)
-        // {
-        //     lock (_gclock) JuliaGC.JL_GC_PUSHARGS(values);
-        // }
-        //
-        // public static void POP_GC()
-        // {
-        //     lock (_gclock) JuliaGC.JL_GC_POP();
-        // }
+        public static void PUSH_GC(Any[] values)
+        {
+            lock (_gclock) JuliaGC.JL_GC_PUSHARGS(values);
+        }
+
+        public static void PUSH_GC(Any a1) => PUSH_GC(new Any[] { a1 });
+
+        public static void PUSH_GC(Any a1,
+                                   Any a2) => PUSH_GC(new Any[] { a1, a2 });
+
+        public static void PUSH_GC(Any a1,
+                                   Any a2,
+                                   Any a3) => PUSH_GC(new Any[] { a1, a2, a3 });
+
+        public static void PUSH_GC(Any a1,
+                                   Any a2,
+                                   Any a3,
+                                   Any a4) => PUSH_GC(new Any[] { a1, a2, a3, a4 });
+
+        public static void POP_GC()
+        {
+            lock (_gclock) JuliaGC.JL_GC_POP();
+        }
 
         public static string UnboxString(Any val) => Marshal.PtrToStringAnsi(JuliaCalls.jl_string_ptr(val));
-
-        // public static unsafe Any AllocStruct(Any type,
-        //                                      Span<Any> vals) => JuliaCalls.jl_new_structv(type, vals.ToPointer(), (uint)vals.Length);
+        // public static unsafe Any AllocStruct(Any type, Any[] vals) => JuliaCalls.jl_new_structv(type, vals.ToPointer(), (uint) vals.Length);
 
         private static string MString(IntPtr p)
         {

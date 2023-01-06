@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using JuliaNET.Stdlib;
-
-//Written by Johnathan Bizzano
 
 namespace JuliaNET.Core
 {
@@ -123,17 +120,21 @@ namespace JuliaNET.Core
         {
             var elType = JType.GetJuliaTypeFromNetType(a.GetType().GetElementType());
             var aType = JuliaCalls.jl_apply_array_type(elType, a.Rank);
-            IntPtr ptr = GCHandle.Alloc(a, GCHandleType.Pinned).AddrOfPinnedObject();
+            var ptr = GCHandle.Alloc(a, GCHandleType.Pinned).AddrOfPinnedObject();
 
             if (a.Rank == 1)
                 _ptr = JuliaCalls.jl_ptr_to_array_1d(aType, ptr, a.Length, own ? 1 : 0);
             else
             {
-                int* dims = stackalloc int[a.Rank];
+                long* dims = stackalloc long[a.Rank];
                 for (int i = 0; i < a.Rank; i++)
-                    dims[i] = a.GetLength(i);
-                var dimsTuple = JPrimitive.makentupleF.Invoke(JPrimitive.UInt32T, a.Rank, new(dims));
-                _ptr = JuliaCalls.jl_ptr_to_array(aType, ptr, dimsTuple, own ? 1 : 0);
+                    dims[i] = a.GetLength(a.Rank - (i + 1));
+                var dimT = JPrimitive.makentupleF.Invoke(JPrimitive.Int64T, a.Rank, new(dims));
+                _ptr = JuliaCalls.jl_ptr_to_array(aType, ptr, dimT, own ? 1 : 0);
+                for (int i = 0; i < a.Rank; i++)
+                    dims[i] = a.Rank - i;
+                dimT = JPrimitive.makentupleF.Invoke(JPrimitive.Int64T, a.Rank, new(dims));
+                _ptr = JPrimitive.PermutedDimsArrayT.Create(_ptr, dimT);
             }
         }
 
@@ -201,34 +202,34 @@ namespace JuliaNET.Core
             set => _ptr[idx] = value;
         }
 
-        // public Any this[Any i1,
-        //                 Any i2]
-        // {
-        //     get => _ptr[i1, i2];
-        //     set => _ptr[i1, i2] = value;
-        // }
-        //
-        // public Any this[Any i1,
-        //                 Any i2,
-        //                 Any i3]
-        // {
-        //     get => _ptr[i1, i2, i3];
-        //     set => _ptr[i1, i2, i3] = value;
-        // }
-        //
-        // public Any this[Any i1,
-        //                 Any i2,
-        //                 Any i3,
-        //                 Any i4]
-        // {
-        //     get => _ptr[i1, i2, i3, i4];
-        //     set => _ptr[i1, i2, i3, i4] = value;
-        // }
+        public Any this[Any i1,
+                        Any i2]
+        {
+            get => _ptr[i1, i2];
+            set => _ptr[i1, i2] = value;
+        }
 
-        // public Any this[Span<Any> args]
-        // {
-        //     get => _ptr[args];
-        //     set => _ptr[args] = value;
-        // }
+        public Any this[Any i1,
+                        Any i2,
+                        Any i3]
+        {
+            get => _ptr[i1, i2, i3];
+            set => _ptr[i1, i2, i3] = value;
+        }
+
+        public Any this[Any i1,
+                        Any i2,
+                        Any i3,
+                        Any i4]
+        {
+            get => _ptr[i1, i2, i3, i4];
+            set => _ptr[i1, i2, i3, i4] = value;
+        }
+
+        public Any this[Any[] args]
+        {
+            get => _ptr[args];
+            set => _ptr[args] = value;
+        }
     }
 }

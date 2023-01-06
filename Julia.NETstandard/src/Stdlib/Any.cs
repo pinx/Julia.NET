@@ -85,6 +85,11 @@ namespace JuliaNET.Stdlib
         {
         }
 
+        public Any(Array a,
+                   bool own) : this(new JArray(a, own))
+        {
+        }
+
         public Any(object o) : this(CreateFromObject(o)) { }
 
         private static Any CreateFromObject(object o)
@@ -129,7 +134,9 @@ namespace JuliaNET.Stdlib
         public static implicit operator Any(ushort l) => new Any(l);
         public static implicit operator Any(string l) => new Any(l);
         public static implicit operator Any(double l) => new Any(l);
+
         public static implicit operator Any(float l) => new Any(l);
+
         // public static implicit operator Any(Half l) => new Any(l);
         public static implicit operator Any(char l) => new Any(l);
         public static implicit operator Any(bool l) => new Any(l);
@@ -148,7 +155,9 @@ namespace JuliaNET.Stdlib
         public static explicit operator char(Any value) => value.UnboxChar();
         public static explicit operator bool(Any value) => value.UnboxBool();
         public static explicit operator double(Any value) => value.UnboxFloat64();
+
         public static explicit operator float(Any value) => value.UnboxFloat32();
+
         // public static explicit operator Half(Any value) => value.UnboxFloat16();
         public long UnboxInt64() => JuliaCalls.jl_unbox_int64(this);
         public int UnboxInt32() => JuliaCalls.jl_unbox_int32(this);
@@ -160,7 +169,9 @@ namespace JuliaNET.Stdlib
         public ushort UnboxUInt16() => JuliaCalls.jl_unbox_uint16(this);
         public byte UnboxUInt8() => JuliaCalls.jl_unbox_uint8(this);
         public double UnboxFloat64() => JuliaCalls.jl_unbox_float64(this);
+
         public float UnboxFloat32() => JuliaCalls.jl_unbox_float32(this);
+
         // public Half UnboxFloat16() => (Half)JuliaCalls.jl_unbox_float32(this);
         public char UnboxChar() => (char)JuliaCalls.jl_unbox_int32(this);
         public IntPtr UnboxPtr() => JuliaCalls.jl_unbox_voidpointer(this);
@@ -245,13 +256,13 @@ namespace JuliaNET.Stdlib
             return val;
         }
 
-        // public Any Invoke(params Any[] args)
-        // {
-        //     var val = UnsafeInvoke(args);
-        //     Core.Julia.CheckExceptions();
-        //     return val;
-        // }
-        //
+        public Any Invoke(params Any[] args)
+        {
+            var val = UnsafeInvoke(args);
+            Core.Julia.CheckExceptions();
+            return val;
+        }
+
         // public Any InvokeSplat(params Any[] args)
         // {
         //     var val = UnsafeInvokeSplat(args);
@@ -296,8 +307,11 @@ namespace JuliaNET.Stdlib
         // public unsafe Any UnsafeInvoke(Span<Any> args) => UnsafeInvoke(args.ToPointer(), args.Length);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe Any UnsafeInvoke(Any[] args) => UnsafeInvoke(args.ToPointer(), args.Length);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe Any UnsafeInvoke(Any* args,
-                                       int length) => JuliaCalls.jl_call(this, args, length);
+                                        int length) => JuliaCalls.jl_call(this, args, length);
 
         // [MethodImpl(MethodImplOptions.AggressiveInlining)]
         // public unsafe Any UnsafeInvokeSplat(params Any[] args) =>
@@ -317,49 +331,49 @@ namespace JuliaNET.Stdlib
             set => JPrimitive.setindexNotF.UnsafeInvoke(ptr, idx, value);
         }
 
-        // public Any this[Any i1,
-        //                 Any i2]
-        // {
-        //     get => JPrimitive.getindexF.UnsafeInvoke(ptr, i1, i2);
-        //     set => JPrimitive.setindexNotF.UnsafeInvoke(stackalloc Any[] { ptr, value, i1, i2 });
-        // }
-        //
-        // public Any this[Any i1,
-        //                 Any i2,
-        //                 Any i3]
-        // {
-        //     get => JPrimitive.getindexF.UnsafeInvoke(stackalloc Any[] { ptr, i1, i2, i3 });
-        //     set => JPrimitive.setindexNotF.UnsafeInvoke(stackalloc Any[] { ptr, value, i1, i2, i3 });
-        // }
-        //
-        // public Any this[Any i1,
-        //                 Any i2,
-        //                 Any i3,
-        //                 Any i4]
-        // {
-        //     get => JPrimitive.getindexF.UnsafeInvoke(stackalloc Any[] { ptr, i1, i2, i3, i4 });
-        //     set => JPrimitive.setindexNotF.UnsafeInvoke(stackalloc Any[] { ptr, value, i1, i2, i3, i4 });
-        // }
+        public Any this[Any i1,
+                        Any i2]
+        {
+            get => JPrimitive.getindexF.UnsafeInvoke(ptr, i1, i2);
+            set => JPrimitive.setindexNotF.UnsafeInvoke(new Any[] { ptr, value, i1, i2 });
+        }
 
-        // public unsafe Any this[Span<Any> args]
-        // {
-        //     get
-        //     {
-        //         Span<Any> a = stackalloc Any[args.Length + 1];
-        //         a[0] = ptr;
-        //         Buffer.MemoryCopy(args.ToPointer(), a.ToPointer() + 1, a.Length, args.Length);
-        //         return JPrimitive.getindexF.UnsafeInvoke(a);
-        //     }
-        //
-        //     set
-        //     {
-        //         Span<Any> a = stackalloc Any[args.Length + 2];
-        //         a[0] = ptr;
-        //         a[1] = value;
-        //         Buffer.MemoryCopy(args.ToPointer(), a.ToPointer() + 2, a.Length, args.Length);
-        //         JPrimitive.setindexNotF.UnsafeInvoke(a);
-        //     }
-        // }
+        public Any this[Any i1,
+                        Any i2,
+                        Any i3]
+        {
+            get => JPrimitive.getindexF.UnsafeInvoke(new Any[] { ptr, i1, i2, i3 });
+            set => JPrimitive.setindexNotF.UnsafeInvoke(new Any[] { ptr, value, i1, i2, i3 });
+        }
+
+        public Any this[Any i1,
+                        Any i2,
+                        Any i3,
+                        Any i4]
+        {
+            get => JPrimitive.getindexF.UnsafeInvoke(new Any[] { ptr, i1, i2, i3, i4 });
+            set => JPrimitive.setindexNotF.UnsafeInvoke(new Any[] { ptr, value, i1, i2, i3, i4 });
+        }
+
+        public unsafe Any this[Any[] args]
+        {
+            get
+            {
+                var a = stackalloc Any[args.Length + 1];
+                a[0] = ptr;
+                Buffer.MemoryCopy(args.ToPointer(), a + 1, args.Length, args.Length);
+                return JPrimitive.getindexF.UnsafeInvoke(a, args.Length);
+            }
+
+            set
+            {
+                var a = stackalloc Any[args.Length + 2];
+                a[0] = ptr;
+                a[1] = value;
+                Buffer.MemoryCopy(args.ToPointer(), a + 2, args.Length, args.Length);
+                JPrimitive.setindexNotF.UnsafeInvoke(a, args.Length);
+            }
+        }
 
         #endregion
 
@@ -484,16 +498,19 @@ namespace JuliaNET.Stdlib
         #endregion
 
         #region Enumerator
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
         IEnumerator<Any> IEnumerable<Any>.GetEnumerator() => new JEnumerator<Any, Any, Any, Any>(((JVal<Any>)this).This);
+
         public IEnumerator<Any> GetEnumerator()
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

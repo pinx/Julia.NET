@@ -1,7 +1,7 @@
-﻿/*
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace JuliaNET.Utils
 {
@@ -37,13 +37,14 @@ namespace JuliaNET.Utils
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected byte* Resize(int value)
+        protected byte* Resize(int length)
         {
-            if (value != _items.Length)
+            if (length != _items.Length)
             {
-                if (value > 0)
+                if (length > 0)
                 {
-                    byte[] newItems = GC.AllocateUninitializedArray<byte>(value, true);
+                    byte[] newItems = new byte[length]; //{} GC.AllocateUninitializedArray<byte>(length, true);
+                    GCHandle.Alloc(newItems, GCHandleType.Pinned);
                     if (_size > 0)
                         Array.Copy(_items, newItems, _size);
                     _items = newItems;
@@ -59,23 +60,23 @@ namespace JuliaNET.Utils
             return _ptr;
         }
 
-        public T[] ReadArray<T>(int idx) where T : unmanaged
-        {
-            T[] v = new T[Read<int>(idx)];
-            idx += sizeof(int);
-            fixed (T* dptr = v)
-                Unsafe.CopyBlock(dptr, (T*)(_ptr + idx), (uint)v.Length);
-            return v;
-        }
+        // public T[] ReadArray<T>(int idx) where T : unmanaged
+        // {
+        //     T[] v = new T[Read<int>(idx)];
+        //     idx += sizeof(int);
+        //     fixed (T* dptr = v)
+        //         Unsafe.CopyBlock(dptr, (T*)(_ptr + idx), (uint)v.Length);
+        //     return v;
+        // }
 
-        public T* WriteArray<T>(T[] v,
-                                out int aptr) where T : unmanaged
-        {
-            var p = WriteArray<T>(v.Length, out aptr);
-            fixed (T* dptr = v)
-                Unsafe.CopyBlock(p, dptr, (uint)(sizeof(T) * v.Length));
-            return p;
-        }
+        // public T* WriteArray<T>(T[] v,
+        //                         out int aptr) where T : unmanaged
+        // {
+        //     var p = WriteArray<T>(v.Length, out aptr);
+        //     fixed (T* dptr = v)
+        //         Unsafe.CopyBlock(p, dptr, (uint)(sizeof(T) * v.Length));
+        //     return p;
+        // }
 
         public T* WriteArray<T>(int size,
                                 out int aptr) where T : unmanaged
@@ -134,19 +135,18 @@ namespace JuliaNET.Utils
             return loc;
         }
 
-        public byte[] ToByteArray()
-        {
-            var bytes = new byte[Count];
-            fixed (byte* dest = bytes)
-                Unsafe.CopyBlock(dest, _ptr, (uint)Count);
-            return bytes;
-        }
+        // public byte[] ToByteArray()
+        // {
+        //     var bytes = new byte[Count];
+        //     fixed (byte* dest = bytes)
+        //         Marshal.Copy(_ptr, dest, 0, (uint)Count);
+        //     return bytes;
+        // }
+        //
+        // public byte* GetDataPointer(int idx) => _ptr + idx;
 
-        public byte* GetDataPointer(int idx) => _ptr + idx;
-
-        public ref T Read<T>() where T : unmanaged => ref Read<T>(_size);
-        public ref T Read<T>(int idx) where T : unmanaged => ref Unsafe.AsRef<T>(_ptr + idx);
-        public void SetCount(int p) => _size = p;
+        // public ref T Read<T>() where T : unmanaged => ref Read<T>(_size);
+        // public ref T Read<T>(int idx) where T : unmanaged => ref Unsafe.AsRef<T>(_ptr + idx);
+        // public void SetCount(int p) => _size = p;
     }
 }
-*/

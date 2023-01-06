@@ -1,8 +1,8 @@
-using JuliaNET.Core;
+﻿using JuliaNET.Core;
 using JuliaNET.Stdlib;
 using NUnit.Framework;
 
-namespace Test
+namespace TestStandard
 {
     public class Tests
     {

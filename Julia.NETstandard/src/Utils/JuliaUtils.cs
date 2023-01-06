@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace JuliaNET.Utils
@@ -32,9 +33,9 @@ namespace JuliaNET.Utils
             return null;
         }
 
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         // public static unsafe T* ToPointer<T>(this Span<T> s) where T : unmanaged => (T*)Unsafe.AsPointer(ref s.GetPinnableReference());
+        public static unsafe T* ToPointer<T>(this T[] s) where T : unmanaged => (T*)GCHandle.Alloc(s, GCHandleType.Pinned).AddrOfPinnedObject();
 
         public static void PrintExp(this Exception x,
                                     TextWriter tw = null)
