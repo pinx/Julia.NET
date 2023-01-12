@@ -19,6 +19,8 @@ namespace JuliaNET.Stdlib
 
         public Any(IntPtr ptr) => this.ptr = ptr;
 
+        public bool IsEnumerable => !this.Type.IsPrimitive;
+
         #region Conversion
 
         public unsafe Any(void* l) : this(JuliaCalls.jl_box_voidpointer(new IntPtr(l)))
@@ -311,7 +313,7 @@ namespace JuliaNET.Stdlib
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe Any UnsafeInvoke(Any* args,
-                                        int length) => JuliaCalls.jl_call(this, args, length);
+                                       int length) => JuliaCalls.jl_call(this, args, length);
 
         // [MethodImpl(MethodImplOptions.AggressiveInlining)]
         // public unsafe Any UnsafeInvokeSplat(params Any[] args) =>
@@ -501,14 +503,19 @@ namespace JuliaNET.Stdlib
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            if (this.IsEnumerable)
+                return GetEnumerator();
+            // <Any> can be a basic type, or an enumerable
+            // To prevent endless loop, we should not return a JEnumerator.
+            return (new [] { this }).GetEnumerator();
         }
 
-        IEnumerator<Any> IEnumerable<Any>.GetEnumerator() => new JEnumerator<Any, Any, Any, Any>(((JVal<Any>)this).This);
+        IEnumerator<Any> IEnumerable<Any>.GetEnumerator() =>
+            new JEnumerator<Any, Any, Any, Any>(((JVal<Any>)this).This);
 
-        public IEnumerator<Any> GetEnumerator()
+        private IEnumerator<Any> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new JEnumerator<Any, Any, Any, Any>(((JVal<Any>)this).This);
         }
 
         #endregion

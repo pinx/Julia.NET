@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nunit\AnyCollectionEqualConstraint.cs" />
+    <Compile Include="Nunit\Is.cs" />
+    <Compile Include="Nunit\AnyEqualConstraint.cs" />
+    <Compile Include="Nunit\NunitAnyCollectionEqualityComparer.cs" />
+    <Compile Include="Nunit\NunitAnyEqualityComparer.cs" />
     <Compile Include="Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
