@@ -37,6 +37,33 @@ namespace JuliaNET.Utils
         // public static unsafe T* ToPointer<T>(this Span<T> s) where T : unmanaged => (T*)Unsafe.AsPointer(ref s.GetPinnableReference());
         public static unsafe T* ToPointer<T>(this T[] s) where T : unmanaged => (T*)GCHandle.Alloc(s, GCHandleType.Pinned).AddrOfPinnedObject();
 
+        public static T[,] ToMatrix<T>(this T[][] source) where T : unmanaged
+        {
+            var dataOut = new T[source.Length, source[0].Length];
+            var assertLength = source[0].Length;
+
+            unsafe
+            {
+                for (var i = 0; i < source.Length; i++)
+                {
+                    if (source[i].Length != assertLength)
+                    {
+                        throw new InvalidOperationException("The given jagged array is not rectangular.");
+                    }
+
+                    fixed (T* pDataIn = source[i])
+                    {
+                        fixed (T* pDataOut = &dataOut[i, 0])
+                        {
+                            CopyBlockHelper.SmartCopy<T>(pDataOut, pDataIn, assertLength);
+                        }
+                    }
+                }
+            }
+
+            return dataOut;
+        }
+
         public static void PrintExp(this Exception x,
                                     TextWriter tw = null)
         {

@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Lokad.ILPack" Version="0.1.7" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
   </ItemGroup>
 
 </Project>

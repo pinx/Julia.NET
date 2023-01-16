@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JuliaNET.Core;
 using JuliaNET.Stdlib;
+using JuliaNET.Utils;
 using NUnit.Framework;
 
 namespace TestStandard
@@ -43,7 +45,7 @@ namespace TestStandard
         }
 
         [Test]
-        public void MatrixMath()
+        public void IntMatrixMath()
         {
             var m1 = new[,] { { 1, 1 }, { 2, 2 } };
             var m2 = new[,] { { 3, 3 }, { 4, 4 } };
@@ -51,6 +53,21 @@ namespace TestStandard
             IEnumerable<Any> y = mod.GetFunction("add").Invoke(new Any(m1), new Any(m2));
             // Rows and columns are reversed
             var expected = new[,] { { 4, 6 }, { 4, 6 } }.Cast<int>().Select(val => new Any(val));
+            Assert.That(y, Nunit.Is.EqualToJuliaEnumerable(expected), "Matrix Add Failure");
+        }
+
+        [Test]
+        public void FloatMatrixMath()
+        {
+            var mArray1 = new[] { new[] { 1f, 1 }, new[] { 2f, 2 } };
+            var mArray2 = new[] { new[] { 3f, 3 }, new[] { 4f, 4 } };
+            // Jagged arrays need to be converted to multi-dimensional arrays
+            var m1 = mArray1.ToMatrix();
+            var m2 = mArray2.ToMatrix();
+            JModule mod = Julia.Eval(@"module T; add(m1, m2) = m1 .+ m2;end");
+            IEnumerable<Any> y = mod.GetFunction("add").Invoke(new Any(m1), new Any(m2));
+            // Rows and columns are reversed
+            var expected = new[,] { { 4f, 6 }, { 4, 6 } }.Cast<float>().Select(val => new Any(val));
             Assert.That(y, Nunit.Is.EqualToJuliaEnumerable(expected), "Matrix Add Failure");
         }
     }
