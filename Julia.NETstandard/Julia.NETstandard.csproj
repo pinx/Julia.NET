@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>JuliadotNET</Title>
+    <Authors>Johnathan Bizzano</Authors>
+    <PackageProjectUrl>https://github.com/HyperSphereStudio/JULIAdotNET</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/HyperSphereStudio/JULIAdotNET/blob/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/HyperSphereStudio/JULIAdotNET</RepositoryUrl>
+    <RootNamespace>JuliaNET</RootNamespace>
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lokad.ILPack" Version="0.1.7" />
+    <PackageReference Include="System.Memory" Version="4.5.4" />
+  </ItemGroup>
+
+</Project>

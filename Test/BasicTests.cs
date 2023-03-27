@@ -2,7 +2,7 @@ using JuliaNET.Core;
 using JuliaNET.Stdlib;
 using NUnit.Framework;
 
-namespace JuliadotNETTest
+namespace Test
 {
     public class Tests
     {
